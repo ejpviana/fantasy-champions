@@ -4,178 +4,844 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fantasy Champions League 2026/27</title>
+
   <style>
-    :root { --bg:#061120; --gold:#f7c948; --cyan:#46e8ff; --white:#f5f8ff; --muted:#b8c6d8; --danger:#ff6b6b; --line:rgba(255,255,255,.12); }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; color:var(--white); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(circle at 15% 10%,rgba(70,232,255,.17),transparent 23rem),radial-gradient(circle at 85% 0%,rgba(247,201,72,.15),transparent 21rem),linear-gradient(160deg,#04101f 0%,var(--bg) 45%,#07182b 100%); }
-    .topbar { position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between; gap:15px; padding:14px max(20px,calc((100vw - 1120px)/2)); background:rgba(4,16,31,.86); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
-    .brand { color:var(--white); font-weight:900; letter-spacing:.6px; text-decoration:none; white-space:nowrap; }
-    .brand span { color:var(--gold); }
-    nav { display:flex; gap:5px; overflow-x:auto; }
-    nav a { padding:8px 10px; color:var(--muted); border-radius:8px; font-size:.9rem; text-decoration:none; white-space:nowrap; }
-    nav a:hover { color:var(--white); background:rgba(255,255,255,.09); }
-    .container { max-width:1120px; margin:auto; padding:0 20px 50px; }
-    .hero { display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:36px; min-height:500px; padding:55px 0 35px; }
-    .tag { display:inline-flex; align-items:center; gap:8px; color:var(--cyan); font-size:.86rem; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; }
-    h1 { margin:14px 0; font-size:clamp(2.7rem,7vw,5.7rem); line-height:.91; letter-spacing:-3px; }
-    h1 .gold { color:var(--gold); }
-    .hero p { max-width:600px; color:var(--muted); font-size:1.08rem; }
-    .countdown { display:inline-block; margin:18px 0 0; padding:10px 13px; color:var(--cyan); border:1px solid rgba(70,232,255,.35); border-radius:10px; background:rgba(70,232,255,.08); font-weight:900; }
-    #timer { color:var(--gold); }
-    .buttons { display:flex; flex-wrap:wrap; gap:12px; margin-top:25px; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; padding:12px 17px; border-radius:10px; font-weight:800; text-decoration:none; transition:transform .18s,box-shadow .18s; }
-    .btn:hover { transform:translateY(-2px); }
-    .btn-primary { color:#102035; background:var(--gold); box-shadow:0 10px 24px rgba(247,201,72,.22); }
-    .btn-secondary { color:var(--white); border:1px solid var(--line); background:rgba(255,255,255,.06); }
-    .stadium { position:relative; min-height:355px; overflow:hidden; border:1px solid rgba(70,232,255,.28); border-radius:24px; background:linear-gradient(145deg,#12395b,#071727 60%); box-shadow:0 24px 70px rgba(0,0,0,.3); }
-    .stars { position:absolute; inset:0; opacity:.7; background-image:radial-gradient(circle,#fff 1px,transparent 1.5px); background-size:33px 35px; }
-    .pitch { position:absolute; right:12%; bottom:-12%; left:12%; height:62%; border:3px solid rgba(255,255,255,.54); border-radius:48% 48% 5% 5%; background:repeating-linear-gradient(90deg,rgba(47,178,102,.56) 0 18px,rgba(35,146,82,.56) 18px 36px); transform:perspective(340px) rotateX(43deg); }
-    .pitch::after { position:absolute; top:0; left:50%; height:100%; border-left:2px solid rgba(255,255,255,.6); content:""; }
-    .cup { position:absolute; top:33px; left:50%; font-size:7.4rem; filter:drop-shadow(0 10px 14px rgba(0,0,0,.42)); transform:translateX(-50%); animation:float 3.2s ease-in-out infinite; }
-    .champions { position:absolute; top:190px; width:100%; color:var(--gold); font-size:.83rem; font-weight:900; letter-spacing:3px; text-align:center; }
-    @keyframes float { 50% { transform:translate(-50%,-10px) rotate(2deg); } }
-    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; margin:10px 0 54px; }
-    .stat,.card { border:1px solid var(--line); border-radius:15px; background:linear-gradient(155deg,rgba(20,53,83,.92),rgba(9,29,49,.95)); }
-    .stat { padding:18px; }
-    .stat strong { display:block; color:var(--gold); font-size:1.25rem; }
-    .stat span { color:var(--muted); font-size:.88rem; }
-    section { margin:50px 0; scroll-margin-top:75px; }
-    .section-heading { display:flex; align-items:end; justify-content:space-between; gap:15px; margin-bottom:18px; }
-    h2 { margin:0; font-size:clamp(1.65rem,4vw,2.4rem); }
-    .section-heading p { margin:0; color:var(--muted); }
-    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-    .card { padding:20px; }
-    .card h3 { margin:0 0 8px; color:var(--cyan); }
-    .card p,.card li { color:var(--muted); }
-    .card ul { margin:11px 0 0; padding-left:18px; }
-    .rule-number { color:var(--gold); font-size:.8rem; font-weight:900; letter-spacing:1px; }
-    .participants { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .player { min-height:145px; padding:18px 10px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.05); text-align:center; transition:transform .18s,border-color .18s; }
-    .player:hover { border-color:rgba(247,201,72,.55); transform:translateY(-3px); }
-    .avatar-photo { display:block; width:64px; height:64px; margin:0 auto 10px; border:2px solid var(--gold); border-radius:50%; background:#10253d; object-fit:cover; }
-    .player small { color:var(--muted); }
-    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:15px; }
-    table { width:100%; min-width:560px; border-collapse:collapse; background:rgba(9,29,49,.76); }
-    th,td { padding:14px 16px; border-bottom:1px solid var(--line); text-align:left; }
-    th { color:var(--cyan); font-size:.84rem; letter-spacing:.7px; text-transform:uppercase; }
-    tr:last-child td { border-bottom:0; }
-    .rank { color:var(--gold); font-weight:900; }
-    .bad { color:var(--danger); font-weight:800; }
-    .mvp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-    .mvp-card { position:relative; min-height:160px; overflow:hidden; padding:22px; border:1px solid rgba(247,201,72,.45); border-radius:15px; background:linear-gradient(135deg,rgba(247,201,72,.18),rgba(9,29,49,.95) 60%); transition:transform .18s,box-shadow .18s; }
-    .mvp-card:hover { box-shadow:0 15px 30px rgba(0,0,0,.22); transform:translateY(-4px); }
-    .mvp-card::after { position:absolute; top:8px; right:12px; opacity:.2; font-size:5rem; content:"⭐"; }
-    .mvp-card h3 { position:relative; margin:5px 0; color:var(--gold); }
-    .mvp-points { position:relative; display:inline-block; margin-top:12px; padding:6px 10px; border-radius:99px; background:rgba(70,232,255,.14); color:var(--cyan); font-size:.88rem; font-weight:900; }
+    :root {
+      --bg: #061120;
+      --gold: #f7c948;
+      --cyan: #46e8ff;
+      --white: #f5f8ff;
+      --muted: #b8c6d8;
+      --danger: #ff6b6b;
+      --green: #70e000;
+      --line: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(70, 232, 255, 0.17), transparent 23rem),
+        radial-gradient(circle at 85% 0%, rgba(247, 201, 72, 0.15), transparent 21rem),
+        linear-gradient(160deg, #04101f 0%, var(--bg) 45%, #07182b 100%);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 14px max(20px, calc((100vw - 1120px) / 2));
+      border-bottom: 1px solid var(--line);
+      background: rgba(4, 16, 31, 0.86);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      color: var(--white);
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    nav {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+    }
+
+    nav a {
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: auto;
+      padding: 0 20px 50px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 36px;
+      min-height: 500px;
+      padding: 55px 0 35px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cyan);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 14px 0;
+      font-size: clamp(2.7rem, 7vw, 5.7rem);
+      line-height: 0.91;
+      letter-spacing: -3px;
+    }
+
+    h1 .gold {
+      color: var(--gold);
+    }
+
+    .hero p {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .countdown {
+      display: inline-block;
+      margin: 18px 0 0;
+      padding: 10px 13px;
+      color: var(--cyan);
+      border: 1px solid rgba(70, 232, 255, 0.35);
+      border-radius: 10px;
+      background: rgba(70, 232, 255, 0.08);
+      font-weight: 900;
+    }
+
+    #timer {
+      color: var(--gold);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 17px;
+      border-radius: 10px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #102035;
+      background: var(--gold);
+      box-shadow: 0 10px 24px rgba(247, 201, 72, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--white);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .stadium {
+      position: relative;
+      min-height: 355px;
+      overflow: hidden;
+      border: 1px solid rgba(70, 232, 255, 0.28);
+      border-radius: 24px;
+      background: linear-gradient(145deg, #12395b, #071727 60%);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      opacity: 0.7;
+      background-image: radial-gradient(circle, #fff 1px, transparent 1.5px);
+      background-size: 33px 35px;
+    }
+
+    .pitch {
+      position: absolute;
+      right: 12%;
+      bottom: -12%;
+      left: 12%;
+      height: 62%;
+      border: 3px solid rgba(255, 255, 255, 0.54);
+      border-radius: 48% 48% 5% 5%;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(47, 178, 102, 0.56) 0 18px,
+        rgba(35, 146, 82, 0.56) 18px 36px
+      );
+      transform: perspective(340px) rotateX(43deg);
+    }
+
+    .pitch::after {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      height: 100%;
+      border-left: 2px solid rgba(255, 255, 255, 0.6);
+      content: "";
+    }
+
+    .cup {
+      position: absolute;
+      top: 33px;
+      left: 50%;
+      font-size: 7.4rem;
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.42));
+      transform: translateX(-50%);
+      animation: float 3.2s ease-in-out infinite;
+    }
+
+    .champions {
+      position: absolute;
+      top: 190px;
+      width: 100%;
+      color: var(--gold);
+      font-size: 0.83rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-align: center;
+    }
+
+    @keyframes float {
+      50% {
+        transform: translate(-50%, -10px) rotate(2deg);
+      }
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin: 10px 0 54px;
+    }
+
+    .stat,
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: linear-gradient(
+        155deg,
+        rgba(20, 53, 83, 0.92),
+        rgba(9, 29, 49, 0.95)
+      );
+    }
+
+    .stat {
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 1.25rem;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    section {
+      margin: 50px 0;
+      scroll-margin-top: 75px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.65rem, 4vw, 2.4rem);
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--cyan);
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .card ul {
+      margin: 11px 0 0;
+      padding-left: 18px;
+    }
+
+    .rule-number {
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .participants {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .player {
+      min-height: 145px;
+      padding: 18px 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      text-align: center;
+      transition: transform 0.18s, border-color 0.18s;
+    }
+
+    .player:hover {
+      border-color: rgba(247, 201, 72, 0.55);
+      transform: translateY(-3px);
+    }
+
+    .avatar-photo {
+      display: block;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 10px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      background: #10253d;
+      object-fit: cover;
+    }
+
+    .player small {
+      color: var(--muted);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      background: rgba(9, 29, 49, 0.76);
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    th {
+      color: var(--cyan);
+      font-size: 0.84rem;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .rank {
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .bad {
+      color: var(--danger);
+      font-weight: 800;
+    }
+
+    .mvp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .match-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .mvp-card {
+      position: relative;
+      min-height: 205px;
+      overflow: hidden;
+      padding: 22px;
+      border: 1px solid rgba(247, 201, 72, 0.45);
+      border-radius: 15px;
+      background: linear-gradient(
+        135deg,
+        rgba(247, 201, 72, 0.18),
+        rgba(9, 29, 49, 0.95) 60%
+      );
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+
+    .match-link .mvp-card {
+      cursor: pointer;
+    }
+
+    .match-link:hover .mvp-card {
+      border-color: var(--cyan);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.22);
+      transform: translateY(-4px);
+    }
+
+    .mvp-card::after {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      opacity: 0.2;
+      font-size: 5rem;
+      content: "⭐";
+    }
+
+    .mvp-card::before {
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      z-index: 2;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 0.76rem;
+      font-weight: 900;
+      content: "▶ Ver resumo";
+    }
+
+    .mvp-card h3 {
+      position: relative;
+      margin: 5px 0;
+      color: var(--gold);
+    }
+
+    .match-result {
+      position: relative;
+      display: inline-block;
+      margin-top: 9px;
+      padding: 7px 11px;
+      border: 1px solid rgba(70, 232, 255, 0.25);
+      border-radius: 8px;
+      background: rgba(70, 232, 255, 0.08);
+      color: var(--white);
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .match-result strong {
+      margin: 0 5px;
+      color: var(--gold);
+      font-size: 1.15rem;
+    }
+
+    .match-status {
+      position: relative;
+      margin-top: 8px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .mvp-points {
+      position: relative;
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 10px;
+      border-radius: 99px;
+      background: rgba(70, 232, 255, 0.14);
+      color: var(--cyan);
+      font-size: 0.88rem;
+      font-weight: 900;
+    }
+
     .history {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: start;
-  gap: 16px;
-}
-    .palmares-list { margin:0; padding:0; list-style:none; }
-    .palmares-list li { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--line); color:var(--muted); }
-    .palmares-list li:last-child { border-bottom:0; }
-    .dst-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 11px; border-radius:999px; background:rgba(247,201,72,.16); color:var(--gold); font-size:.85rem; font-weight:900; }
-    .choroes { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .cry { margin-top:10px; padding:14px; border-left:3px solid var(--danger); border-radius:10px; background:rgba(255,107,107,.09); color:var(--muted); }
-    .notice { padding:18px; border:1px solid rgba(247,201,72,.35); border-radius:14px; background:linear-gradient(90deg,rgba(247,201,72,.18),rgba(70,232,255,.08)); }
-    footer { padding:35px 0 10px; color:var(--muted); text-align:center; }
-    @media (max-width:760px) { .topbar { padding:12px 16px; } .topbar .brand { font-size:.84rem; } .hero { grid-template-columns:1fr; padding-top:37px; } .stadium { min-height:300px; } .stats,.participants { grid-template-columns:repeat(2,1fr); } .grid,.choroes,.mvp-grid,.history { grid-template-columns:1fr; } h1 { letter-spacing:-2px; } }
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .palmares-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .palmares-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .palmares-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .dst-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(247, 201, 72, 0.16);
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
     .moment-card {
-  overflow: hidden;
-  border: 1px solid rgba(247, 201, 72, 0.45);
-  border-radius: 18px;
-  background: linear-gradient(
-    135deg,
-    rgba(247, 201, 72, 0.15),
-    rgba(9, 29, 49, 0.95) 58%
-  );
-  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
-}
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid rgba(247, 201, 72, 0.55);
+      border-radius: 18px;
+      background: linear-gradient(
+        155deg,
+        rgba(20, 53, 83, 0.92),
+        rgba(9, 29, 49, 0.95)
+      );
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
+    }
 
-.moment-image {
-  display: block;
-  width: 100%;
-  max-height: 560px;
-  background: #10253d;
-  object-fit: contain;
-}
+    .moment-image {
+      display: block;
+      width: 100%;
+      max-height: 560px;
+      background: #10253d;
+      object-fit: contain;
+    }
 
-.moment-content {
-  padding: 20px;
-}
+    .moment-content {
+      padding: 20px;
+    }
 
-.moment-label {
-  display: inline-block;
-  margin-bottom: 8px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(247, 201, 72, 0.16);
-  color: var(--gold);
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-}
+    .moment-label {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(247, 201, 72, 0.16);
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
 
-.moment-content h3 {
-  margin: 0 0 7px;
-  color: var(--cyan);
-  font-size: 1.35rem;
-}
+    .moment-content h3 {
+      margin: 0 0 7px;
+      color: var(--cyan);
+      font-size: 1.35rem;
+    }
 
-.moment-content p {
-  margin: 0;
-  color: var(--muted);
-}
+    .moment-content p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .choroes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .cry {
+      margin-top: 10px;
+      padding: 14px;
+      border-left: 3px solid var(--danger);
+      border-radius: 10px;
+      background: rgba(255, 107, 107, 0.09);
+      color: var(--muted);
+    }
+
+    .notice {
+      padding: 18px;
+      border: 1px solid rgba(247, 201, 72, 0.35);
+      border-radius: 14px;
+      background: linear-gradient(
+        90deg,
+        rgba(247, 201, 72, 0.18),
+        rgba(70, 232, 255, 0.08)
+      );
+    }
+
+    footer {
+      padding: 35px 0 10px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        padding: 12px 16px;
+      }
+
+      .topbar .brand {
+        font-size: 0.84rem;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 37px;
+      }
+
+      .stadium {
+        min-height: 300px;
+      }
+
+      .stats,
+      .participants {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid,
+      .choroes,
+      .mvp-grid,
+      .history {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <header class="topbar">
-    <a class="brand" href="#inicio">FANTASY <span>UCL</span></a>
-    <nav><a href="#regras">Regras</a><a href="#participantes">Participantes</a><a href="#classificacao">Classificação</a><a href="#mvp">MVPs</a><a href="#palmares">Palmarés</a><a href="#momento">Momento</a><a href="#chorao">Chorões</a></nav>
+    <a class="brand" href="#inicio">
+      FANTASY <span>UCL</span>
+    </a>
+
+    <nav>
+      <a href="#regras">Regras</a>
+      <a href="#participantes">Participantes</a>
+      <a href="#classificacao">Classificação</a>
+      <a href="#mvp">MVPs</a>
+      <a href="#palmares">Palmarés</a>
+      <a href="#momento">Momento</a>
+      <a href="#chorao">Chorões</a>
+    </nav>
   </header>
 
   <main class="container">
     <section class="hero" id="inicio">
       <div>
         <div class="tag">✦ Temporada 2026/27</div>
-        <h1>FANTASY<br><span class="gold">CHAMPIONS</span><br>LEAGUE</h1>
-        <p>Aqui não há amigos, há treinadores, rivais, especialistas de bancada e candidatos ao título de Chorão da Champions.</p>
-        <div id="countdown" class="countdown" aria-live="polite">⏳ Início da Jornada em: <span id="timer">A carregar...</span></div>
-        <div class="buttons"><a class="btn btn-primary" href="https://gaming.uefa.com/en/uclfantasy/league-leaderboard/00330030003500350036003400300032" target="_blank" rel="noopener">⚽ Ver Liga UEFA</a><a class="btn btn-secondary" href="#regras">Ler regulamento</a></div>
+
+        <h1>
+          FANTASY<br />
+          <span class="gold">CHAMPIONS</span><br />
+          LEAGUE
+        </h1>
+
+        <p>
+          Aqui não há amigos, há treinadores, rivais, especialistas de bancada
+          e candidatos ao título de Chorão da Champions.
+        </p>
+
+        <div id="countdown" class="countdown" aria-live="polite">
+          ⏳ Início da Jornada em:
+          <span id="timer">A carregar...</span>
+        </div>
+
+        <div class="buttons">
+          <a
+            class="btn btn-primary"
+            href="https://gaming.uefa.com/en/uclfantasy/league-leaderboard/00330030003500350036003400300032"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ⚽ Ver Liga UEFA
+          </a>
+
+          <a class="btn btn-secondary" href="#regras">
+            Ler regulamento
+          </a>
+        </div>
       </div>
-      <div class="stadium" aria-label="Ilustração de estádio e troféu"><div class="stars"></div><div class="cup">🏆</div><div class="champions">SÓ UM SERÁ CAMPEÃO</div><div class="pitch"></div></div>
+
+      <div class="stadium" aria-label="Ilustração de estádio e troféu">
+        <div class="stars"></div>
+        <div class="cup">🏆</div>
+        <div class="champions">SÓ UM SERÁ CAMPEÃO</div>
+        <div class="pitch"></div>
+      </div>
     </section>
 
-    <div class="stats"><div class="stat"><strong>5€</strong><span>Inscrição por jogador</span></div><div class="stat"><strong>1€</strong><span>Multa por jornada falhada</span></div><div class="stat"><strong>5€</strong><span>Multa por desistência</span></div><div class="stat"><strong>1.º 70% · 2.º 30%</strong><span>Distribuição dos prémios no final</span></div></div>
+    <div class="stats">
+      <div class="stat">
+        <strong>5€</strong>
+        <span>Inscrição por jogador</span>
+      </div>
 
-    <section id="regras"><div class="section-heading"><div><h2>Regulamento</h2><p>Leitura obrigatória antes de começar a chorar.</p></div></div><div class="grid">
-      <article class="card"><div class="rule-number">ARTIGO 1.º</div><h3>Inscrição</h3><p>Entrada de <strong>5€ por jogador</strong>, paga antes do início da competição. Quem não pagar não entra.</p></article>
-      <article class="card"><div class="rule-number">ARTIGO 2.º</div><h3>Jornadas</h3><p>É obrigatório apresentar uma equipa válida em todas as jornadas. Falhaste? <strong>Multa de 1€.</strong></p></article>
-      <article class="card"><div class="rule-number">ARTIGO 3.º</div><h3>Desistência</h3><p>Quem abandonar a competição a meio da época paga <strong>5€ de multa</strong>. Não há VAR para fugir disto.</p></article>
-      <article class="card"><div class="rule-number">ARTIGO 4.º</div><h3>Prémios</h3><ul><li>🥇 1.º lugar: 70%</li><li>🥈 2.º lugar: 30%</li><li>💩 Último: 10 min para 2 penáltis de 0,5L</li></ul></article>
-      <article class="card"><div class="rule-number">ARTIGO 5.º</div><h3>Chorão da Champions</h3><p>Em cada jornada, o grupo elege o maior chorão, caso exista. No final, o Rei do Choro acompanha o último classificado num penálti.</p></article>
-      <article class="card"><div class="rule-number">ARTIGO FINAL</div><h3>Jantar Final</h3><p>Amizades suspensas até o dia do jantar. No final da competição irá realizar-se um jantar de condecoração do campeão numa data escolhida pela maioria.</p></article>
-    </div></section>
+      <div class="stat">
+        <strong>1€</strong>
+        <span>Multa por jornada falhada</span>
+      </div>
+
+      <div class="stat">
+        <strong>5€</strong>
+        <span>Multa por desistência</span>
+      </div>
+
+      <div class="stat">
+        <strong>1.º 70% · 2.º 30%</strong>
+        <span>Distribuição dos prémios no final</span>
+      </div>
+    </div>
+
+    <section id="regras">
+      <div class="section-heading">
+        <div>
+          <h2>Regulamento</h2>
+          <p>Leitura obrigatória antes de começar a chorar.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="rule-number">ARTIGO 1.º</div>
+          <h3>Inscrição</h3>
+          <p>
+            Entrada de <strong>5€ por jogador</strong>, paga antes do início da
+            competição. Quem não pagar não entra.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="rule-number">ARTIGO 2.º</div>
+          <h3>Jornadas</h3>
+          <p>
+            É obrigatório apresentar uma equipa válida em todas as jornadas.
+            Falhaste? <strong>Multa de 1€.</strong>
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="rule-number">ARTIGO 3.º</div>
+          <h3>Desistência</h3>
+          <p>
+            Quem abandonar a competição a meio da época paga
+            <strong>5€ de multa</strong>. Não há VAR para fugir disto.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="rule-number">ARTIGO 4.º</div>
+          <h3>Prémios</h3>
+          <ul>
+            <li>🥇 1.º lugar: 70%</li>
+            <li>🥈 2.º lugar: 30%</li>
+            <li>💩 Último: 10 min para 2 penáltis de 0,5 L</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="rule-number">ARTIGO 5.º</div>
+          <h3>Chorão da Champions</h3>
+          <p>
+            Em cada jornada, o grupo elege o maior chorão, caso exista. No final,
+            o Rei do Choro acompanha o último classificado num penálti.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="rule-number">ARTIGO FINAL</div>
+          <h3>Jantar Final</h3>
+          <p>
+            Amizades suspensas até ao dia do jantar. No final da competição
+            haverá um jantar de condecoração do campeão, em data escolhida pela
+            maioria.
+          </p>
+        </article>
+      </div>
+    </section>
 
     <section id="participantes">
-      <div class="section-heading"><div><h2>Participantes</h2><p>Os dez treinadores que vão lutar pelo título e pela dignidade.</p></div></div>
-      <div class="participants">
-        <div class="player"><img class="avatar-photo" src="images/kubota.jpg" alt="Kubota"><strong>Kubota</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/tetra.jpg" alt="Tetra"><strong>Tetra</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/jackass.jpg" alt="Jackass"><strong>Jackass</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/mcnamara.jpg" alt="McNamara"><strong>McNamara</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/nelson.jpg" alt="Nélson"><strong>Nélson</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/alexandre.jpg" alt="Alexandre"><strong>Alexandre</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/marco.jpg" alt="Marco"><strong>Marco</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/andre.jpg" alt="André"><strong>André</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/rafa.jpg" alt="Rafa"><strong>Rafa</strong><br><small>Treinador</small></div>
-        <div class="player"><img class="avatar-photo" src="images/nuno.jpg" alt="Nuno"><strong>Nuno</strong><br><small>Treinador</small></div>
+      <div class="section-heading">
+        <div>
+          <h2>Participantes</h2>
+          <p>Os dez treinadores que vão lutar pelo título e pela dignidade.</p>
+        </div>
+      </div>
 
-        
+      <div class="participants">
+        <div class="player"><img class="avatar-photo" src="images/kubota.jpg" alt="Kubota" /><strong>Kubota</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/tetra.jpg" alt="Tetra" /><strong>Tetra</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/jackass.jpg" alt="Jackass" /><strong>Jackass</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/mcnamara.jpg" alt="McNamara" /><strong>McNamara</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/nelson.jpg" alt="Nélson" /><strong>Nélson</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/alexandre.jpg" alt="Alexandre" /><strong>Alexandre</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/marco.jpg" alt="Marco" /><strong>Marco</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/andre.jpg" alt="André" /><strong>André</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/rafa.jpg" alt="Rafa" /><strong>Rafa</strong><br /><small>Treinador</small></div>
+        <div class="player"><img class="avatar-photo" src="images/nuno.jpg" alt="Nuno" /><strong>Nuno</strong><br /><small>Treinador</small></div>
       </div>
     </section>
 
@@ -207,7 +873,7 @@
             <tr><td class="rank">6</td><td>Alexandre</td><td>—</td><td>Pré-época</td></tr>
             <tr><td class="rank">7</td><td>Marco</td><td>—</td><td>Pré-época</td></tr>
             <tr><td class="rank">8</td><td>André</td><td>—</td><td>Pré-época</td></tr>
-            <tr><td class="rank">8</td><td>Nuno</td><td>—</td><td>Pré-época</td></tr>
+            <tr><td class="rank">9</td><td>Nuno</td><td>—</td><td>Pré-época</td></tr>
             <tr><td class="rank">10</td><td>Rafa</td><td>—</td><td class="bad">Pré-época</td></tr>
           </tbody>
         </table>
@@ -218,169 +884,319 @@
       <div class="section-heading">
         <div>
           <h2>⭐ MVPs das Partidas</h2>
-          <p>O melhor jogador de cada jogo da jornada.</p>
+          <p>Clica num jogo para abrir o respetivo resumo no YouTube.</p>
         </div>
       </div>
 
       <div class="mvp-grid">
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 1</div><h3>AEK vs LASK</h3><span class="mvp-points">⭐ Răzvan Marin </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 2</div><h3>Brugge vs Aston Villa</h3><span class="mvp-points">⭐ John McGinn </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 3</div><h3>Dortmund vs Villarreal</h3><span class="mvp-points">⭐ Serhou Guirassy </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 4</div><h3>Porto vs Man City</h3><span class="mvp-points">⭐ Erling Haaland  </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 5</div><h3>Lille vs Betis</h3><span class="mvp-points">⭐ Marc Bartra</span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 6</div><h3>Real Madrid vs Inter Milão</h3><span class="mvp-points">⭐ Federico Valverde</span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 7</div><h3>Barcelona vs Feyenoord</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 8</div><h3>Estugarda vs Viking</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 9</div><h3>Liverpool vs Atl. Madrid</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 10</div><h3>Nápoles vs Arsenal</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 11</div><h3>PSG vs Bratislava</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 13</div><h3>Fenerbahce vs AS Roma</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 14</div><h3>PSV vs Shakhtar</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 15</div><h3>Bayern vs Bodo/Glimt</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 16</div><h3>Como vs RB Leipzig</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 17</div><h3>Manchester Utd vs Sabah Baku</h3><span class="mvp-points">⭐ </span></article>
-        <article class="mvp-card"><div class="rule-number">JORNADA 1 · JOGO 18</div><h3>Slavia Praga vs Lens</h3><span class="mvp-points">⭐ </span></article>
+        <a class="match-link" href="https://www.youtube.com/watch?v=NtTWzRcyKew" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>AEK vs LASK</h3>
+            <div class="match-result">AEK <strong>1-0</strong> LASK</div>
+            <div class="match-status">✅ Finalizado</div>
+            <span class="mvp-points">⭐ Răzvan Marin</span>
+          </article>
+        </a>
 
+        <a class="match-link" href="https://www.youtube.com/watch?v=fkWB-5F0Bds"target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Brugge vs Aston Villa</h3>
+            <div class="match-result">Brugge <strong>2-3</strong> Aston Villa</div>
+            <div class="match-status">✅ Finalizado</div>
+            <span class="mvp-points">⭐ John McGinn</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/watch?v=-PT8JBemSVU" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Dortmund vs Villarreal</h3>
+            <div class="match-result">Dortmund <strong>3-2</strong> Villarreal</div>
+            <div class="match-status">✅ Finalizado</div>
+            <span class="mvp-points">⭐ Serhou Guirassy</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/watch?v=BTh2eqXLT7w" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Porto vs Man City</h3>
+            <div class="match-result">Porto <strong>0-2</strong> Man City</div>
+            <div class="match-status">✅ Finalizado</div>
+            <span class="mvp-points">⭐ Erling Haaland</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/watch?v=jcfeTVx84Xw" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Lille vs Betis</h3>
+            <div class="match-result">Lille <strong>2-3</strong> Betis</div>
+            <div class="match-status">✅ Finalizado</div>
+            <span class="mvp-points">⭐ Marc Bartra</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/watch?v=NMAJS5wdhRo" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Real Madrid vs Inter Milão</h3>
+            <div class="match-result">Real Madrid <strong>2-1</strong> Inter</div>
+            <div class="match-status">✅ Finalizado</div>
+            <span class="mvp-points">⭐ Federico Valverde</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Barcelona+vs+Feyenoord+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1  </div>
+            <h3>Barcelona vs Feyenoord</h3>
+            <div class="match-result">Barcelona <strong>-</strong> Feyenoord</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Stuttgart+vs+Viking+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Estugarda vs Viking</h3>
+            <div class="match-result">Estugarda <strong>-</strong> Viking</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Liverpool+vs+Atletico+Madrid+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Liverpool vs Atl. Madrid</h3>
+            <div class="match-result">Liverpool <strong>-</strong> Atl. Madrid</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Napoli+vs+Arsenal+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Nápoles vs Arsenal</h3>
+            <div class="match-result">Nápoles <strong>-</strong> Arsenal</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=PSG+vs+Slovan+Bratislava+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>PSG vs Bratislava</h3>
+            <div class="match-result">PSG <strong>-</strong> Bratislava</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Fenerbahce+vs+Roma+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Fenerbahçe vs AS Roma</h3>
+            <div class="match-result">Fenerbahçe <strong>-</strong> AS Roma</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=PSV+vs+Shakhtar+Donetsk+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>PSV vs Shakhtar</h3>
+            <div class="match-result">PSV <strong>-</strong> Shakhtar</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Bayern+Munich+vs+Bodo+Glimt+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Bayern vs Bodø/Glimt</h3>
+            <div class="match-result">Bayern <strong>-</strong> Bodø/Glimt</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Como+vs+RB+Leipzig+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1</div>
+            <h3>Como vs RB Leipzig</h3>
+            <div class="match-result">Como <strong>-</strong> RB Leipzig</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Manchester+United+vs+Sabah+Baku+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Manchester Utd vs Sabah Baku</h3>
+            <div class="match-result">Manchester Utd <strong>-</strong> Sabah Baku</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
+
+        <a class="match-link" href="https://www.youtube.com/results?search_query=Slavia+Prague+vs+Lens+highlights" target="_blank" rel="noopener noreferrer">
+          <article class="mvp-card">
+            <div class="rule-number">JORNADA 1 </div>
+            <h3>Slavia Praga vs Lens</h3>
+            <div class="match-result">Slavia Praga <strong>-</strong> Lens</div>
+            <div class="match-status">⏳ Por atualizar</div>
+            <span class="mvp-points">⭐ Por decidir</span>
+          </article>
+        </a>
       </div>
     </section>
 
     <section id="palmares">
-  <div class="section-heading">
-    <div>
-      <h2>🏆 Palmarés Fantasy</h2>
-
-      <p>
-        O registo oficial da hegemonia que esta época promete tentar derrubar.
-      </p>
-    </div>
-  </div>
-
-  <div class="history">
-    <article class="card">
-      <h3>Palmarés da liga</h3>
-
-      <ul class="palmares-list">
-        <li>
-          <span>🏆 Mundial 2022</span>
-          <strong>Tetra</strong>
-        </li>
-
-        <li>
-          <span>🏆 Liga dos Campeões 2023/24</span>
-          <strong>Tetra</strong>
-        </li>
-
-        <li>
-          <span>🏆 Euro 2024</span>
-          <strong>Kubota</strong>
-        </li>
-
-        <li>
-          <span>🏆 Liga dos Campeões 2024/25</span>
-          <strong>Kubota</strong>
-        </li>
-
-        <li>
-          <span>🏆 Mundial de Clubes 2025</span>
-          <strong>Kubota</strong>
-        </li>
-
-        <li>
-          <span>🏆 Liga dos Campeões 2025/26</span>
-          <strong>Jackass</strong>
-        </li>
-
-        <li>
-          <span>🏆 Mundial 2026</span>
-          <strong>Kubota</strong>
-        </li>
-
-        <li>
-          <span>🏆 Liga dos Campeões 2026/27</span>
-          <strong>Em disputa</strong>
-        </li>
-      </ul>
-    </article>
-
-    <article class="card">
-      <div class="dst-badge">
-        👑 DINASTIA DST'S
+      <div class="section-heading">
+        <div>
+          <h2>🏆 Palmarés Fantasy</h2>
+          <p>O registo oficial da hegemonia que esta época promete tentar derrubar.</p>
+        </div>
       </div>
 
-      <h3 style="margin-top: 15px;">
-        O reinado está em risco
-      </h3>
+      <div class="history">
+        <article class="card">
+          <h3>Palmarés da liga</h3>
 
-      <p>
-        Até hoje, o troféu pertenceu sempre a membros dos DST's.
-        A temporada 2026/27 é a oportunidade para acabar com esta hegemonia
-        ou confirmar que continuam a mandar nisto tudo.
-      </p>
+          <ul class="palmares-list">
+            <li><span>🏆 Mundial 2022</span><strong>Tetra</strong></li>
+            <li><span>🏆 Liga dos Campeões 2023/24</span><strong>Tetra</strong></li>
+            <li><span>🏆 Euro 2024</span><strong>Kubota</strong></li>
+            <li><span>🏆 Liga dos Campeões 2024/25</span><strong>Kubota</strong></li>
+            <li><span>🏆 Mundial de Clubes 2025</span><strong>Kubota</strong></li>
+            <li><span>🏆 Liga dos Campeões 2025/26</span><strong>Jackass</strong></li>
+            <li><span>🏆 Mundial 2026</span><strong>Kubota</strong></li>
+            <li><span>🏆 Liga dos Campeões 2026/27</span><strong>Em disputa</strong></li>
+          </ul>
+        </article>
 
-      <div class="cry">
-        Missão da época: impedir que o troféu volte a viajar para os mesmos
-        suspeitos do costume.
+        <article class="card">
+          <div class="dst-badge">👑 DINASTIA DST'S</div>
+
+          <h3 style="margin-top: 15px;">O reinado está em risco</h3>
+
+          <p>
+            Até hoje, o troféu pertenceu sempre a membros dos DST's. A temporada
+            2026/27 é a oportunidade para acabar com esta hegemonia ou confirmar
+            que continuam a mandar nisto tudo.
+          </p>
+
+          <div class="cry">
+            Missão da época: impedir que o troféu volte a viajar para os mesmos
+            suspeitos do costume.
+          </div>
+        </article>
       </div>
-    </article>
-  </div>
-</section>
+    </section>
 
-<section id="momento">
-  <div class="section-heading">
-    <div>
-      <h2>📸 O Momento da Semana</h2>
+    <section id="momento">
+      <div class="section-heading">
+        <div>
+          <h2>📸 O Momento da Semana</h2>
+          <p>A prova visual de que a Fantasy mexe com a dignidade de qualquer pessoa.</p>
+        </div>
+      </div>
 
-      <p>
-        A prova visual de que a Fantasy mexe com a dignidade de qualquer pessoa.
-      </p>
-    </div>
-  </div>
+      <article class="moment-card">
+        <img
+          class="moment-image"
+          src="images/momento-semana.jpg"
+          alt="O Momento da Semana"
+        />
 
-  <article class="moment-card">
-    <img
-      class="moment-image"
-      src="images/momento-semana.jpg"
-      alt="O Momento da Semana"
-    />
+        <div class="moment-content">
+          <span class="moment-label">Jornada 1</span>
 
-    <div class="moment-content">
-      <span class="moment-label">
-        Jornada 1
-      </span>
+          <h3>Mudanças na Direção</h3>
 
-      <h3>
-        Mudanças na Direção
-      </h3>
+          <p>O fim de uma era histórica de Nelson.</p>
+        </div>
+      </article>
+    </section>
 
-      <p>
-        O fim de uma era histórica de Nelson.
-      </p>
-    </div>
-  </article>
-</section>
+    <section id="chorao">
+      <div class="section-heading">
+        <div>
+          <h2>Chorões da Jornada</h2>
+          <p>Um registo oficial das desculpas mais fracas da época.</p>
+        </div>
+      </div>
 
+      <div class="choroes">
+        <article class="card">
+          <h3>😭 Chorão da jornada</h3>
+          <p><strong>Jornada 1:</strong> Por decidir</p>
 
-    <section id="chorao"><div class="section-heading"><div><h2>Chorões da Jornada</h2><p>Um registo oficial das desculpas mais fracas da época.</p></div></div><div class="choroes"><article class="card"><h3>😭 Chorão da jornada</h3><p><strong>Jornada 1:</strong> Por decidir</p><div class="cry">“Quote do Chorão”</div></article><article class="card"><h3>👑 Rei do Choro</h3><p><strong>Líder atual:</strong> Por decidir</p><div class="cry">A pessoa com mais distinções terá de acompanhar o último classificado num dos penáltis.</div></article></div></section>
+          <div class="cry">
+            “Quote do Chorão”
+          </div>
+        </article>
 
-    <section class="notice"><strong>⚠️ Nota importante:</strong> ao entrares na liga, aceitas o regulamento, as provocações e a possibilidade de acabares a beber penáltis sob pressão.</section>
+        <article class="card">
+          <h3>👑 Rei do Choro</h3>
+          <p><strong>Líder atual:</strong> Por decidir</p>
+
+          <div class="cry">
+            A pessoa com mais distinções terá de acompanhar o último classificado
+            num dos penáltis.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="notice">
+      <strong>⚠️ Nota importante:</strong> ao entrares na liga, aceitas o
+      regulamento, as provocações e a possibilidade de acabares a beber
+      penáltis sob pressão.
+    </section>
   </main>
 
-  <footer>Fantasy Champions League 2026/27 · Que os pontos estejam convosco ⚽</footer>
+  <footer>
+    Fantasy Champions League 2026/27 · Que os pontos estejam convosco ⚽
+  </footer>
 
   <script>
     const inicioJornada = new Date("2026-09-08T17:45:00+01:00").getTime();
     const timerEl = document.getElementById("timer");
     let contador;
-    function doisDigitos(numero) { return String(numero).padStart(2, "0"); }
+
+    function doisDigitos(numero) {
+      return String(numero).padStart(2, "0");
+    }
+
     function atualizarContador() {
       const falta = inicioJornada - Date.now();
-      if (falta <= 0) { timerEl.textContent = "Jornada 1 em andamento!"; clearInterval(contador); return; }
+
+      if (falta <= 0) {
+        timerEl.textContent = "Jornada 1 em andamento!";
+        clearInterval(contador);
+        return;
+      }
+
       const dias = Math.floor(falta / 86400000);
       const horas = Math.floor((falta / 3600000) % 24);
       const minutos = Math.floor((falta / 60000) % 60);
       const segundos = Math.floor((falta / 1000) % 60);
-      timerEl.textContent = `${dias}d ${doisDigitos(horas)}h ${doisDigitos(minutos)}m ${doisDigitos(segundos)}s`;
+
+      timerEl.textContent =
+        `${dias}d ${doisDigitos(horas)}h ${doisDigitos(minutos)}m ${doisDigitos(segundos)}s`;
     }
+
     atualizarContador();
     contador = setInterval(atualizarContador, 1000);
   </script>
